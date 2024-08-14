@@ -15,7 +15,7 @@ export function SideBar(props: {
   const { data: channels } = useCloudQuery(channelsManager.listChannels);
 
   return (
-    <div className="grid grid-cols-[4rem_auto] bg-[#5A2B5D]">
+    <div className="grid grid-cols-[4rem_auto] bg-[#5A2B5D] h-screen overflow-hidden">
       <div className="justify-end flex flex-col h-screen border-r border-white/25">
         <div className="p-2">
           <UserProfile />
