@@ -7,12 +7,7 @@ import { TextMessage } from "./TextMessage";
 
 export function Chat(props: { chatRoomId: string }) {
   const messageList = useCloud<typeof ConversationCS>(props.chatRoomId);
-
-  const { data: messages } = useCloudQuery(messageList.getMessages);
-
   const [newMessage, setNewMessage] = useState("");
-  // console.log(messages);
-  console.log("Chat", messages);
 
   return (
     <FreestyleChat<[SlackMessage], ConversationCS>
@@ -21,6 +16,7 @@ export function Chat(props: { chatRoomId: string }) {
         <form
           className="absolute bottom-2 left-2 right-2"
           onSubmit={async (e) => {
+            if (newMessage === "") return;
             e.preventDefault();
             await messageList.sendTextMessage({
               text: newMessage,
@@ -28,13 +24,14 @@ export function Chat(props: { chatRoomId: string }) {
             setNewMessage("");
           }}
         >
-          <div className="relative w-full">
+          <div className="relative w-full px-2">
             <input
               value={newMessage}
-              className="w-full p-2 border-2 border-gray-300 rounded-lg focus:border-sky-500 focus:outline-sky-400/25 transition-all focus:outline focus:outline-4 "
+              className="w-full p-2 border border-gray-300 rounded-lg focus:border-gray-400 outline-none"
               onChange={(e) => {
                 setNewMessage(e.target.value);
               }}
+              placeholder={`Send a message`}
             />
             <button
               type="submit"
