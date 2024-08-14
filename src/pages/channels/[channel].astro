@@ -3,13 +3,23 @@ import Layout from "../../layouts/Layout.astro";
 import { SlackLayout } from "../../components/Layout";
 import { configureFreestyle, useCloud } from "freestyle-sh";
 import type { ConversationManagerCS } from "../../cloudstate/chat-manager";
+import type { AuthCS } from "../../cloudstate/auth";
 
 configureFreestyle({
   createHeaders: () => Astro.request.headers,
 });
 
+const user = await useCloud<typeof AuthCS>("auth")
+  .getUserInfo()
+  .catch(() => undefined);
+
+if (user === undefined) {
+  return Astro.redirect("/signin");
+}
+
 const chatManager = useCloud<typeof ConversationManagerCS>("channels");
 const channels = await chatManager.listChannels();
+
 if (
   channels.find((channel) => channel.id === Astro.params.channel) === undefined
 ) {
