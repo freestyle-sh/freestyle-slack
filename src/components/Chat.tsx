@@ -8,25 +8,21 @@ import { useEffect } from "react";
 export function Chat(props: { chatRoomId: string }) {
   const messageList = useCloud<typeof ConversationCS>(props.chatRoomId);
 
-//   const {data: messages} = useCloudQuery(messageList.getMessages);
-//   console.log(messages);
-
-  useEffect(() => {
-    async function testing(){
-        try {
-        const messages = await messageList.getMessages()
-        console.log("Use effect", messages)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    testing()
-    
-  }, [])
+  const { data: messages } = useCloudQuery(messageList.getMessages);
+  // console.log(messages);
+  console.log("Chat", messages);
 
   return (
     <div>
-      <FreestyleChat messageList={messageList} />
+      <FreestyleChat
+        messageList={messageList}
+        displayMessage={(message) => (
+          <div>
+            <div>{message.sender.displayName}</div>
+            <div>{message.data.text}</div>
+          </div>
+        )}
+      />
     </div>
   );
 }
