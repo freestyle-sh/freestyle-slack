@@ -6,6 +6,11 @@ import type { ConversationManagerCS } from "../../cloudstate/chat-manager";
 
 const chatManager = useCloud<typeof ConversationManagerCS>("channels");
 const channels = await chatManager.listChannels();
+if (
+  channels.find((channel) => channel.id === Astro.params.channel) === undefined
+) {
+  return Astro.redirect("/");
+}
 ---
 
 <Layout title="Freestyle.sh Project">

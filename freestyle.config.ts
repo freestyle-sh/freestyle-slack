@@ -7,8 +7,9 @@ export default defineConfig({
   dev: {
     command: "npx astro dev",
     proxy: "http://localhost:4321",
-    initializeCloudstate({useLocal}) {
-      // useLocal(ConversationManagerCS) 
-    }
+
+    initializeCloudstate({ useLocal }) {
+      // useLocal(ConversationManagerCS)
+    },
   },
 });
