@@ -29,13 +29,13 @@ if (
 ---
 
 <Layout title="Freestyle.sh Project">
-  <div class="grid grid-cols-[20rem_1fr] h-screen overflow-hidden">
+  <div class="flex shrink-0 w-full h-screen overflow-hidden">
     <SideBar
       client:load
       baseChannels={channels}
       chatRoomId={Astro.params.channel}
     />
-    <div class="h-screen">
+    <div class="h-screen w-full">
       <Chat client:load chatRoomId={Astro.params.channel!} />
     </div>
   </div>
