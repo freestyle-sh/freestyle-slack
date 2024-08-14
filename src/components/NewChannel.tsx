@@ -26,7 +26,12 @@ export function NewChannel() {
       >
         <div className="flex flex-row justify-between">
           <h1 className="text-xl font-bold">Create a Channel</h1>
-          <button className="stroke-gray-600">
+          <button
+            className="stroke-gray-600"
+            onClick={() => {
+              window.location.href = "/";
+            }}
+          >
             <XMark />
           </button>
         </div>
@@ -40,8 +45,8 @@ export function NewChannel() {
             placeholder="Channel Name"
             onChange={(e) => {
               // check regex
-                setChannelName(e.target.value);
-              
+              setChannelName(e.target.value);
+
               // setChannelName(e.target.value)
             }}
           />

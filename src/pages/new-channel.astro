@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import { SideBar } from "../components/Sidebar";
 import { useCloud } from "freestyle-sh";
 import { ConversationManagerCS } from "../cloudstate/chat-manager";
-import { NewChannel } from "../components/NewChannel";
+import { NewChannel as NewChannelModal } from "../components/NewChannel";
 
 const chatManager = useCloud<typeof ConversationManagerCS>("channels");
 const channels = await chatManager.listChannels();
@@ -16,6 +16,6 @@ const channels = await chatManager.listChannels();
       baseChannels={channels}
       chatRoomId={undefined}
     />
-    <NewChannel client:only="react" />
+    <NewChannelModal client:only="react" />
   </div>
 </Layout>
