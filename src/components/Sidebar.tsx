@@ -1,7 +1,7 @@
 import { useCloudQuery } from "freestyle-sh/react";
-import {
+import type {
   ConversationManagerCS,
-  type PublicChannelData,
+  PublicChannelData,
 } from "../cloudstate/chat-manager";
 import { useCloud } from "freestyle-sh";
 import { ChannelLink } from "./ChannelLink";
@@ -30,6 +30,7 @@ export function SideBar(props: {
         </div>
         {(channels ?? props.baseChannels).map((channel) => (
           <ChannelLink
+            key={channel.id}
             channel={channel}
             isSelected={
               props.chatRoomId === channel.id && props.chatRoomId !== undefined

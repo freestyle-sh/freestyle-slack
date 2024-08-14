@@ -1,4 +1,3 @@
-import { MessageListCS } from "freestyle-chat";
 import { Chat as FreestyleChat } from "freestyle-chat/react";
 import { useCloud } from "freestyle-sh";
 import { useCloudQuery } from "freestyle-sh/react";

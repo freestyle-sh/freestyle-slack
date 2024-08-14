@@ -14,6 +14,12 @@ export class AuthCS extends PasskeyAuthentication {
     return import.meta.env.DEV ? "localhost" : import.meta.env.FREESTYLE_DOMAIN;
   }
 
+  get origin() {
+    return import.meta.env.DEV
+      ? "http://localhost:8910"
+      : `https://${this.rpid}`;
+  }
+
   override async finishRegistration(passkey: FinishPasskeyRegistrationJSON) {
     const info = await super.finishRegistration(passkey);
     const blob = await fetch(

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useCloud } from "freestyle-sh";
-import { useCloudMutation } from "freestyle-sh/react";
-import { ConversationManagerCS } from "../cloudstate/chat-manager";
+import type { ConversationManagerCS } from "../cloudstate/chat-manager";
+import { navigate } from "astro:transitions/client";
 
 export function NewChannel() {
   const [channelName, setChannelName] = useState("");
@@ -19,7 +19,7 @@ export function NewChannel() {
           if (channelName !== "") {
             const newName = channelName.toLowerCase().replace(/ /g, "-");
             channelManager.createChannel(newName).then((channel) => {
-              window.location.href = `/channels/${channel.id}`;
+              navigate(`/channels/${channel.id}`);
             });
           }
         }}
@@ -29,7 +29,7 @@ export function NewChannel() {
           <button
             className="stroke-gray-600"
             onClick={() => {
-              window.location.href = "/";
+              navigate(`/`);
             }}
           >
             <XMark />
