@@ -6,17 +6,15 @@ import { ConversationManagerCS } from "../cloudstate/chat-manager";
 const chatManager = useCloud<typeof ConversationManagerCS>("channels");
 
 
-  
-const newChannel = await chatManager.createChannel("new-channel");
+const existingChannels = await chatManager.listChannels();
 
-return Astro.redirect(`/channels/${newChannel.id}`);
+if (existingChannels.length === 0) {
+  return Astro.redirect("/new-channel");
+}else {
+  return Astro.redirect(`/channels/${existingChannels[0].id}`);
+}
 
+// const newChannel = await chatManager.createChannel("new-channel");
 
+// return Astro.redirect(`/channels/${newChannel.id}`);
 ---
-<!-- 
-<Layout title="Freestyle.sh Project">
-  <main>
-    <SlackLayout />
-  </main>
-</Layout> -->
-<div>test</div>

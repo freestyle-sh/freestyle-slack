@@ -11,7 +11,19 @@ export function NewChannel() {
 
   return (
     <div className="fixed flex items-center justify-center bg-gray-900/40 h-screen w-screen">
-      <div className=" bg-white p-4 rounded-lg min-w-[60vw] max-w-[90vw] sm:max-w-[60vw] flex-col flex">
+      <form
+        className=" bg-white p-4 rounded-lg min-w-[60vw] max-w-[90vw] sm:max-w-[60vw] flex-col flex"
+        onSubmit={(e) => {
+          e.preventDefault();
+          // mutate(channelName)
+          if (channelName !== "") {
+            const newName = channelName.toLowerCase().replace(/ /g, "-");
+            channelManager.createChannel(newName).then((channel) => {
+              window.location.href = `/channels/${channel.id}`;
+            });
+          }
+        }}
+      >
         <div className="flex flex-row justify-between">
           <h1 className="text-xl font-bold">Create a Channel</h1>
           <button className="stroke-gray-600">
@@ -21,37 +33,41 @@ export function NewChannel() {
         <br className="my-2" />
         <label className=" font-bold text-lg">Name</label>
         <div className="relative w-full">
-        <input
-          className="w-full my-2 pl-7 rounded-lg border-2 border-gray-300 focus:border-sky-500 p-2  focus:outline-sky-400/25 transition-all focus:outline focus:outline-4"
-          type="text"
-          placeholder="Channel Name"
-          onChange={(e) => setChannelName(e.target.value)}
-        />
-                    <div className="absolute top-1/2 -translate-y-1/2 left-3 text-gray-500 text-lg">
-                        #
-                    </div>
-
+          <input
+            pattern="^[a-z-]+$"
+            className="w-full my-2 pl-7 rounded-lg border-2 border-gray-300 focus:border-sky-500 p-2  focus:outline-sky-400/25 transition-all focus:outline focus:outline-4"
+            // type="text"
+            placeholder="Channel Name"
+            onChange={(e) => {
+              // check regex
+                setChannelName(e.target.value);
+              
+              // setChannelName(e.target.value)
+            }}
+          />
+          <div className="absolute top-1/2 -translate-y-1/2 left-3 text-gray-500 text-lg">
+            #
+          </div>
         </div>
         <p className="text-gray-600 ">
           People send messages in channels. Some of these messages are nice,
           some are not. Please be nice.
         </p>
 
-        <div className="flex flex-row justify-end">
+        <div className="flex flex-row justify-end mt-2">
           <button
-            className={"p-2 rounded-lg transition-all px-4 " + (channelName !== ""?"bg-[#1d7953] hover:bg-[#196948] text-white hover:shadow-md":"bg-gray-300 text-gray-700")}
-            onClick={() => {
-              if (channelName !== "") {
-                channelManager.createChannel(channelName).then((channel) => {
-                  window.location.href = `/channels/${channel.id}`;
-                });
-              }
-            }}
+            type="submit"
+            className={
+              "p-2 rounded-lg transition-all px-4 " +
+              (channelName !== ""
+                ? "bg-[#1d7953] hover:bg-[#196948] text-white hover:shadow-md"
+                : "bg-gray-300 text-gray-700")
+            }
           >
             Create
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
