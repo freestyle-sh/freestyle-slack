@@ -1,6 +1,13 @@
-import { cloudstate, invalidate, useCloud, useRequest } from "freestyle-sh";
+import {
+  cloudstate,
+  invalidate,
+  useCloud,
+  useLocal,
+  useRequest,
+} from "freestyle-sh";
 import { MessageListCS, TextMessageCS } from "freestyle-chat";
-import { parse as parseCookie} from 'cookie';
+import type { BaseUserCS } from "freestyle-auth/passkey";
+import { AuthCS } from "./auth";
 
 export interface PublicChannelData {
   id: string;
@@ -44,17 +51,18 @@ export class ConversationCS extends MessageListCS {
   constructor(name: string) {
     super();
     this.name = name;
-
   }
 
-  publicInfo(): PublicChannelData{
+  publicInfo(): PublicChannelData {
     return {
       id: this.id,
       name: this.name,
     };
   }
 
-  _onMessageAdded(message: TextMessageCS): void {
-    
+  _onMessageAdded(message: TextMessageCS): void {}
+
+  getCurrentUser(): BaseUserCS {
+    return useLocal(AuthCS).getDefiniteCurrentUser();
   }
 }
