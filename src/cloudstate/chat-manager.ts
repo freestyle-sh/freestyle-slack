@@ -13,6 +13,20 @@ export class ConversationManagerCS {
   channels = new Map<string, ConversationCS>();
   dms = new Map<string, ConversationCS>();
 
+  constructor() {
+    const newConversations = [
+      new ConversationCS("General"),
+      new ConversationCS("Random"),
+      new ConversationCS("Help"),
+      new ConversationCS("Development"),
+      new ConversationCS("Design"),
+      new ConversationCS("Marketing"),
+      new ConversationCS("Sales"),
+      new ConversationCS("Management"),
+    ];
+    newConversations.forEach((c) => this.channels.set(c.id, c));
+  }
+
   createChannel(name: string) {
     const channel = new ConversationCS(name);
     this.channels.set(channel.id, channel);
