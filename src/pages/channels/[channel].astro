@@ -4,16 +4,16 @@ import { SlackLayout } from "../../components/Layout";
 import { useCloud } from "freestyle-sh";
 import type { ConversationManagerCS } from "../../cloudstate/chat-manager";
 
-
 const chatManager = useCloud<typeof ConversationManagerCS>("channels");
 const channels = await chatManager.listChannels();
-
-
-// Astro.ur
 ---
 
 <Layout title="Freestyle.sh Project">
   <main>
-    <SlackLayout client:only="react" chatRoomId={Astro.params.channel!} baseChannels={channels} />
+    <SlackLayout
+      client:only="react"
+      chatRoomId={Astro.params.channel!}
+      baseChannels={channels}
+    />
   </main>
 </Layout>
