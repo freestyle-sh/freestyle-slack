@@ -22,7 +22,7 @@
     "cookie": "^0.6.0",
     "dotenv": "^16.4.5",
     "freestyle-auth": "^0.1.0",
-    "freestyle-chat": "0.1.7",
+    "freestyle-chat": "^0.1.7",
     "freestyle-deno-astro-adapter": "^5.0.4",
     "freestyle-sh": "^0.2.35",
     "nanostores": "^0.10.3",
