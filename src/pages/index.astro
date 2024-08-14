@@ -1,22 +1,22 @@
 ---
-import { TodoList } from "../components/react/todo-list";
-import Layout from "../layouts/Layout.astro";
-import { CreateTodoItem } from "../components/react/create-todo-item";
-import "../styles/todo-list.css";
----
 
+import { useCloud } from "freestyle-sh";
+import { ConversationManagerCS } from "../cloudstate/chat-manager";
+
+const chatManager = useCloud<typeof ConversationManagerCS>("channels");
+
+
+  
+const newChannel = await chatManager.createChannel("new-channel");
+
+return Astro.redirect(`/channels/${newChannel.id}`);
+
+
+---
+<!-- 
 <Layout title="Freestyle.sh Project">
   <main>
-    <article>
-      <header>
-        <h1>
-          <a href="https://www.freestyle.sh" target="_blank"> freestyle.sh </a>
-        </h1>
-        <CreateTodoItem client:load />
-      </header>
-      <section>
-        <TodoList client:load />
-      </section>
-    </article>
+    <SlackLayout />
   </main>
-</Layout>
+</Layout> -->
+<div>test</div>
