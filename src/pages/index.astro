@@ -8,7 +8,11 @@ configureFreestyle({
 
 const chatManager = useCloud<typeof ConversationManagerCS>("channels");
 
-const newChannel = await chatManager.createChannel("new-channel");
+const existingChannels = await chatManager.listChannels();
 
-return Astro.redirect(`/channels/${newChannel.id}`);
+if (existingChannels.length === 0) {
+  return Astro.redirect("/new-channel");
+} else {
+  return Astro.redirect(`/channels/${existingChannels[0].id}`);
+}
 ---
