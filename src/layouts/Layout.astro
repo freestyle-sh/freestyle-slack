@@ -4,8 +4,12 @@ interface Props {
 }
 
 const { title } = Astro.props;
-import { ViewTransitions } from 'astro:transitions';
+import { ViewTransitions } from "astro:transitions";
+import { configureFreestyle } from "freestyle-sh";
 
+configureFreestyle({
+  createHeaders: () => Astro.request.headers,
+});
 ---
 
 <!doctype html>
@@ -18,7 +22,6 @@ import { ViewTransitions } from 'astro:transitions';
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <ViewTransitions />
-
   </head>
   <body>
     <slot />

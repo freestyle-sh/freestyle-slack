@@ -1,22 +1,14 @@
 ---
-
-import { useCloud } from "freestyle-sh";
+import { configureFreestyle, useCloud } from "freestyle-sh";
 import { ConversationManagerCS } from "../cloudstate/chat-manager";
+
+configureFreestyle({
+  createHeaders: () => Astro.request.headers,
+});
 
 const chatManager = useCloud<typeof ConversationManagerCS>("channels");
 
-
-  
 const newChannel = await chatManager.createChannel("new-channel");
 
 return Astro.redirect(`/channels/${newChannel.id}`);
-
-
 ---
-<!-- 
-<Layout title="Freestyle.sh Project">
-  <main>
-    <SlackLayout />
-  </main>
-</Layout> -->
-<div>test</div>

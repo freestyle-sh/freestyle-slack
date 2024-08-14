@@ -1,6 +1,18 @@
 ---
 import { SignIn } from "../components/SignIn";
 import Layout from "../layouts/Layout.astro";
+import cookie from "cookie";
+
+{
+  // TODO: remove this once we have a better way to handle sessions
+  const parsedCookies = cookie.parse(Astro.request.headers.get("cookie") || "");
+  const sessionId =
+    parsedCookies["freestyle-session-id"] || crypto.randomUUID();
+  Astro.response.headers.set(
+    "set-cookie",
+    `freestyle-session-id=${sessionId}; Path=/; HttpOnly; SameSite=Lax`
+  );
+}
 ---
 
 <Layout title="Sign In">
