@@ -4,6 +4,8 @@ import { SlackLayout } from "../../components/Layout";
 import { configureFreestyle, useCloud } from "freestyle-sh";
 import type { ConversationManagerCS } from "../../cloudstate/chat-manager";
 import type { AuthCS } from "../../cloudstate/auth";
+import { SideBar } from "../../components/Sidebar";
+import { Chat } from "../../components/Chat";
 
 configureFreestyle({
   createHeaders: () => Astro.request.headers,
@@ -28,11 +30,14 @@ if (
 ---
 
 <Layout title="Freestyle.sh Project">
-  <main>
-    <SlackLayout
+  <div class="grid grid-cols-[20rem_1fr] h-screen overflow-hidden">
+    <SideBar
       client:load
-      chatRoomId={Astro.params.channel!}
       baseChannels={channels}
+      chatRoomId={Astro.params.channel}
     />
-  </main>
+    <div class="h-screen">
+      <Chat client:load chatRoomId={Astro.params.channel!} />
+    </div>
+  </div>
 </Layout>
