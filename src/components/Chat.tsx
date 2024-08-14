@@ -1,7 +1,7 @@
 import { Chat as FreestyleChat } from "freestyle-chat/react";
 import { useCloud } from "freestyle-sh";
 import { useCloudQuery } from "freestyle-sh/react";
-import type { ConversationCS } from "../cloudstate/chat-manager";
+import type { ConversationCS, SlackMessage } from "../cloudstate/chat-manager";
 import { useEffect, useState } from "react";
 import { TextMessage } from "./TextMessage";
 
@@ -15,14 +15,16 @@ export function Chat(props: { chatRoomId: string }) {
   console.log("Chat", messages);
 
   return (
-    <FreestyleChat
+    <FreestyleChat<[SlackMessage], ConversationCS>
       messageList={messageList}
       messageInput={
         <form
           className="absolute bottom-2 left-2 right-2"
           onSubmit={async (e) => {
             e.preventDefault();
-            await messageList.sendTextMessage({ text: newMessage });
+            await messageList.sendTextMessage({
+              text: newMessage,
+            });
             setNewMessage("");
           }}
         >

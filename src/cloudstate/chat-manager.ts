@@ -51,10 +51,22 @@ export class ConversationManagerCS {
 }
 
 @cloudstate
-export class ConversationCS extends MessageListCS {
+export class ConversationCS extends MessageListCS<[SlackMessage]> {
   id = crypto.randomUUID();
 
   name: string;
+  description = "";
+
+  override async sendTextMessage(message: {
+    text: string;
+  }): Promise<SlackMessage> {
+    return await super._addMessage(
+      new SlackMessage({
+        text: message.text,
+        sender: this.getCurrentUser(),
+      })
+    );
+  }
 
   constructor(name: string) {
     super();
@@ -96,3 +108,55 @@ export class ConversationCS extends MessageListCS {
 //     }
 //   }
 // }
+@cloudstate
+export class SlackMessage extends TextMessageCS {
+  reactions: Map<
+    string,
+    {
+      [userId: string]: undefined;
+    }
+  > = new Map();
+
+  constructor(props: {
+    text: string;
+    sender: {
+      id: string;
+      username: string;
+    };
+  }) {
+    super({
+      text: props.text,
+      sender: {
+        id: props.sender.id,
+        username: props.sender.username,
+      },
+    });
+  }
+
+  getReactions() {
+    return Array.from(this.reactions.entries()).map(([reaction, users]) => ({
+      reaction,
+      users: Object.keys(users),
+    }));
+  }
+
+  addReaction(reaction: string) {
+    const userId = useLocal(AuthCS).getDefiniteCurrentUser().id;
+    const reactions = this.reactions.get(reaction);
+    if (reactions) {
+      reactions[userId] = undefined;
+    } else {
+      this.reactions.set(reaction, { [userId]: undefined });
+    }
+
+    invalidate(useCloud<typeof SlackMessage>(this.id).getReactions);
+  }
+
+  removeReaction(reaction: string, userId: string) {
+    const reactions = this.reactions.get(reaction);
+    if (reactions) {
+      delete reactions[userId];
+    }
+    invalidate(useCloud<typeof SlackMessage>(this.id).getReactions);
+  }
+}
