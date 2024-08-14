@@ -1,9 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { SideBar } from "../components/Sidebar";
-import { useCloud } from "freestyle-sh";
+import { configureFreestyle, useCloud } from "freestyle-sh";
 import { ConversationManagerCS } from "../cloudstate/chat-manager";
 import { NewChannel as NewChannelModal } from "../components/NewChannel";
+
+configureFreestyle({
+  createHeaders: () => Astro.request.headers,
+});
 
 const chatManager = useCloud<typeof ConversationManagerCS>("channels");
 const channels = await chatManager.listChannels();
@@ -11,11 +15,7 @@ const channels = await chatManager.listChannels();
 
 <Layout title="New Channel">
   <div class="grid grid-cols-[20rem_auto]">
-    <SideBar
-      client:only="react"
-      baseChannels={channels}
-      chatRoomId={undefined}
-    />
-    <NewChannelModal client:only="react" />
+    <SideBar client:load baseChannels={channels} chatRoomId={undefined} />
+    <NewChannelModal client:load />
   </div>
 </Layout>

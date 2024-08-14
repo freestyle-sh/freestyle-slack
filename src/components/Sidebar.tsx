@@ -30,6 +30,7 @@ export function SideBar(props: {
         </div>
         {(channels ?? props.baseChannels).map((channel) => (
           <ChannelLink
+            key={channel.id}
             channel={channel}
             isSelected={
               props.chatRoomId === channel.id && props.chatRoomId !== undefined
