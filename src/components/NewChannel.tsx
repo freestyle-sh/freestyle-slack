@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useCloud } from "freestyle-sh";
-import { useCloudMutation } from "freestyle-sh/react";
-import { ConversationManagerCS } from "../cloudstate/chat-manager";
+import type { ConversationManagerCS } from "../cloudstate/chat-manager";
 
 export function NewChannel() {
   const [channelName, setChannelName] = useState("");

@@ -1,9 +1,7 @@
-import { MessageListCS } from "freestyle-chat";
 import { Chat as FreestyleChat } from "freestyle-chat/react";
 import { useCloud } from "freestyle-sh";
 import { useCloudQuery } from "freestyle-sh/react";
 import type { ConversationCS } from "../cloudstate/chat-manager";
-import { useEffect } from "react";
 
 export function Chat(props: { chatRoomId: string }) {
   const messageList = useCloud<typeof ConversationCS>(props.chatRoomId);

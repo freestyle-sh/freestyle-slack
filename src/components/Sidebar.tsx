@@ -1,7 +1,7 @@
 import { useCloudQuery } from "freestyle-sh/react";
-import {
+import type {
   ConversationManagerCS,
-  type PublicChannelData,
+  PublicChannelData,
 } from "../cloudstate/chat-manager";
 import { useCloud } from "freestyle-sh";
 import { ChannelLink } from "./ChannelLink";

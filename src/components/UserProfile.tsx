@@ -1,5 +1,5 @@
 import { useCloud } from "freestyle-sh";
-import { AuthCS } from "../cloudstate/auth";
+import type { AuthCS } from "../cloudstate/auth";
 import { useCloudQuery } from "freestyle-sh/react";
 
 export function UserProfile() {

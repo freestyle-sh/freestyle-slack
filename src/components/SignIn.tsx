@@ -1,7 +1,4 @@
-import {
-  handlePasskeyAuthentication,
-  handlePasskeyRegistration,
-} from "freestyle-auth/passkey";
+import { handlePasskeyRegistration } from "freestyle-auth/passkey";
 import type { AuthCS } from "../cloudstate/auth";
 import { useCloud } from "freestyle-sh";
 import { useState } from "react";

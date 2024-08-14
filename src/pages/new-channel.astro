@@ -15,7 +15,7 @@ const channels = await chatManager.listChannels();
 
 <Layout title="New Channel">
   <div class="grid grid-cols-[20rem_auto]">
-    <SideBar client:load baseChannels={channels} chatRoomId={undefined} />
+    <!-- <SideBar client:load baseChannels={channels} chatRoomId={undefined} /> -->
     <NewChannelModal client:load />
   </div>
 </Layout>
