@@ -54,9 +54,31 @@ export class ConversationCS extends MessageListCS {
     };
   }
 
+  getMessages() {
+    return super.getMessages().map((message) => ({
+      ...message,
+      sender: {
+        ...message.sender,
+        image: useLocal(AuthCS)
+          .users.get(message.sender.id)
+          ?.image.getUrlPath(),
+      },
+    }));
+  }
+
   _onMessageAdded(message: TextMessageCS): void {}
 
   getCurrentUser(): BaseUserCS {
     return useLocal(AuthCS).getDefiniteCurrentUser();
   }
 }
+
+// @cloudstate
+// export class OurTextMessageCS extends TextMessageCS {
+//   getData(): { type: "TEXT_MESSAGE"; text: string; } {
+//     return {
+//       type: "TEXT_MESSAGE",
+//       text: this.data.text,
+//     }
+//   }
+// }

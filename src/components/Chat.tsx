@@ -3,6 +3,7 @@ import { useCloud } from "freestyle-sh";
 import { useCloudQuery } from "freestyle-sh/react";
 import type { ConversationCS } from "../cloudstate/chat-manager";
 import { useEffect, useState } from "react";
+import { TextMessage } from "./TextMessage";
 
 export function Chat(props: { chatRoomId: string }) {
   const messageList = useCloud<typeof ConversationCS>(props.chatRoomId);
@@ -18,7 +19,7 @@ export function Chat(props: { chatRoomId: string }) {
       messageList={messageList}
       messageInput={
         <form
-          className=" absolute bottom-2 left-2 right-2"
+          className="absolute bottom-2 left-2 right-2"
           onSubmit={async (e) => {
             e.preventDefault();
             await messageList.sendTextMessage({ text: newMessage });
@@ -47,15 +48,7 @@ export function Chat(props: { chatRoomId: string }) {
           </div>
         </form>
       }
-      displayMessage={(message) => (
-        <div className="flex flex-row text-base hover:bg-gray-100 p-2 rounded-lg">
-          <div className="bg-gray-300 h-12 rounded-lg aspect-square mr-2 my-2"></div>
-          <div>
-            <div className=" font-bold ">{message.sender.displayName}</div>
-            <div>{message.data.text}</div>
-          </div>
-        </div>
-      )}
+      displayMessage={(message) => <TextMessage message={message} />}
     />
   );
 }
